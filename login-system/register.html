@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register — SecureAuth</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main class="auth-container">
+        <div class="auth-card">
+            <div class="auth-logo">
+                <h1>Create Account</h1>
+                <p>Join SecureAuth today</p>
+            </div>
+
+            <div id="flash-container"></div>
+
+            <form id="register-form" novalidate>
+                <div class="form-group" id="username-group">
+                    <label for="username">Username</label>
+                    <input
+                        type="text"
+                        id="username"
+                        placeholder="Choose a username"
+                        minlength="3"
+                        maxlength="30"
+                        autocomplete="username"
+                    />
+                    <div class="error-message" id="username-error"></div>
+                </div>
+
+                <div class="form-group" id="email-group">
+                    <label for="email">Email</label>
+                    <input
+                        type="email"
+                        id="email"
+                        placeholder="you@example.com"
+                        autocomplete="email"
+                    />
+                    <div class="error-message" id="email-error"></div>
+                </div>
+
+                <div class="form-group" id="password-group">
+                    <label for="password">Password</label>
+                    <div class="password-wrapper">
+                        <input
+                            type="password"
+                            id="password"
+                            placeholder="Min 8 characters, 1 number"
+                            autocomplete="new-password"
+                        />
+                        <button type="button" class="password-toggle" id="password-toggle" aria-label="Show password">
+                            Show
+                        </button>
+                    </div>
+                    <div class="error-message" id="password-error"></div>
+                </div>
+
+                <div class="form-group" id="confirm-group">
+                    <label for="confirm-password">Confirm Password</label>
+                    <div class="password-wrapper">
+                        <input
+                            type="password"
+                            id="confirm-password"
+                            placeholder="Re-enter your password"
+                            autocomplete="new-password"
+                        />
+                        <button type="button" class="password-toggle" id="confirm-toggle" aria-label="Show password">
+                            Show
+                        </button>
+                    </div>
+                    <div class="error-message" id="confirm-error"></div>
+                </div>
+
+                <button type="submit" class="btn btn-primary" id="register-btn">Register</button>
+            </form>
+
+            <div class="auth-links">
+                Already have an account? <a href="login.html">Login</a>
+            </div>
+
+            <footer class="auth-footer">
+                This authentication system is built for educational purposes.
+                Production applications should use server-side authentication,
+                secure password hashing (bcrypt/Argon2), HTTPS, secure cookies,
+                CSRF protection, rate limiting, and a proper backend database.
+            </footer>
+        </div>
+    </main>
+
+    <script src="auth.js"></script>
+    <script src="register.js"></script>
+</body>
+</html>

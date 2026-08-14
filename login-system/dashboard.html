@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SecureAuth - Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="dashboard-card">
+            <div class="dashboard-header">
+                <h1 class="dashboard-logo">SecureAuth</h1>
+                <p class="dashboard-subtitle">Welcome to your Dashboard</p>
+            </div>
+            
+            <div class="user-info">
+                <div class="user-avatar">
+                    <span id="user-initial">U</span>
+                </div>
+                <div class="user-details">
+                    <h2 class="welcome-message">Welcome, <span id="display-username">User</span>!</h2>
+                    <p class="user-email">Email: <span id="display-email">user@example.com</span></p>
+                </div>
+            </div>
+            
+            <div class="dashboard-content">
+                <div class="info-card">
+                    <h3>Account Information</h3>
+                    <ul class="info-list">
+                        <li><strong>Username:</strong> <span id="info-username">-</span></li>
+                        <li><strong>Email:</strong> <span id="info-email">-</span></li>
+                        <li><strong>Session:</strong> Active</li>
+                    </ul>
+                </div>
+                
+                <div class="info-card">
+                    <h3>Security Note</h3>
+                    <p>This is a demo authentication system. In a real application, authentication would be handled server-side with proper security measures like HTTPS, secure session management, and database storage.</p>
+                </div>
+            </div>
+            
+            <button id="logout-btn" class="logout-btn">Logout</button>
+        </div>
+    </div>
+    <script src="dashboard.js"></script>
+</body>
+</html>

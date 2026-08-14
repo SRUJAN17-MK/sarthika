@@ -1,0 +1,443 @@
+/* Reset and base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 20px;
+    line-height: 1.6;
+}
+
+/* App container */
+.app-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Header styles */
+.header {
+    text-align: center;
+    margin-bottom: 2rem;
+    padding: 2rem;
+}
+
+.app-title {
+    font-size: 2.5rem;
+    color: #fff;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.app-subtitle {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.1rem;
+}
+
+/* Input section */
+.input-section {
+    background: #fff;
+    border-radius: 15px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+}
+
+.input-container {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 1rem;
+}
+
+.task-input {
+    flex: 1;
+    padding: 1rem 1.25rem;
+    font-size: 1rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.task-input:focus {
+    border-color: #667eea;
+}
+
+.task-input::placeholder {
+    color: #a0aec0;
+}
+
+.add-btn {
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.add-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+}
+
+.add-btn:active {
+    transform: translateY(0);
+}
+
+.search-container {
+    margin-top: 1rem;
+}
+
+.search-input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    font-size: 0.95rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.search-input:focus {
+    border-color: #667eea;
+}
+
+.search-input::placeholder {
+    color: #a0aec0;
+}
+
+/* Counters section */
+.counters-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.counter {
+    background: #fff;
+    padding: 0.75rem 1.5rem;
+    border-radius: 10px;
+    font-weight: 600;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.pending-counter {
+    color: #667eea;
+    border-left: 4px solid #667eea;
+}
+
+.completed-counter {
+    color: #48bb78;
+    border-left: 4px solid #48bb78;
+}
+
+.counter span {
+    font-size: 1.3rem;
+    font-weight: 700;
+}
+
+.clear-completed-btn {
+    padding: 0.75rem 1.25rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    background: #e53e3e;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.clear-completed-btn:hover {
+    background: #c53030;
+    transform: translateY(-2px);
+}
+
+/* Task sections */
+.tasks-section {
+    margin-bottom: 1.5rem;
+}
+
+.tasks-card {
+    background: #fff;
+    border-radius: 15px;
+    padding: 1.5rem;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+}
+
+.pending-card {
+    border-top: 4px solid #667eea;
+}
+
+.completed-card {
+    border-top: 4px solid #48bb78;
+}
+
+.card-title {
+    font-size: 1.3rem;
+    color: #2d3748;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+/* Task list */
+.task-list {
+    list-style: none;
+}
+
+/* Individual task item */
+.task-item {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    margin-bottom: 0.75rem;
+    background: #f8f9fa;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    gap: 1rem;
+}
+
+.task-item:hover {
+    background: #edf2f7;
+    transform: translateX(5px);
+}
+
+.task-item.completed {
+    background: #f0fff4;
+    border-left: 4px solid #48bb78;
+}
+
+.task-item.completed .task-text {
+    text-decoration: line-through;
+    color: #718096;
+}
+
+.task-text {
+    flex: 1;
+    font-size: 1rem;
+    color: #2d3748;
+    word-break: break-word;
+}
+
+.task-text.editing {
+    padding: 0.5rem;
+    border: 2px solid #667eea;
+    border-radius: 5px;
+    background: #fff;
+    outline: none;
+}
+
+.task-timestamp {
+    font-size: 0.75rem;
+    color: #718096;
+    white-space: nowrap;
+}
+
+.task-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.task-btn {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.complete-btn {
+    background: #48bb78;
+    color: #fff;
+}
+
+.complete-btn:hover {
+    background: #38a169;
+}
+
+.edit-btn {
+    background: #667eea;
+    color: #fff;
+}
+
+.edit-btn:hover {
+    background: #5a67d8;
+}
+
+.delete-btn {
+    background: #e53e3e;
+    color: #fff;
+}
+
+.delete-btn:hover {
+    background: #c53030;
+}
+
+.save-btn {
+    background: #48bb78;
+    color: #fff;
+}
+
+.save-btn:hover {
+    background: #38a169;
+}
+
+.cancel-btn {
+    background: #718096;
+    color: #fff;
+}
+
+.cancel-btn:hover {
+    background: #4a5568;
+}
+
+/* Empty state */
+.empty-state {
+    text-align: center;
+    padding: 2rem;
+    color: #718096;
+    font-style: italic;
+}
+
+/* Responsive design for tablets */
+@media (max-width: 600px) {
+    .input-container {
+        flex-direction: column;
+    }
+    
+    .add-btn {
+        width: 100%;
+    }
+    
+    .counters-section {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .counter {
+        text-align: center;
+    }
+    
+    .task-item {
+        flex-wrap: wrap;
+    }
+    
+    .task-timestamp {
+        width: 100%;
+        text-align: right;
+        margin-top: 0.5rem;
+    }
+    
+    .task-actions {
+        width: 100%;
+        justify-content: flex-end;
+        margin-top: 0.5rem;
+    }
+}
+
+/* Responsive design for mobile */
+@media (max-width: 400px) {
+    .app-title {
+        font-size: 1.8rem;
+    }
+    
+    .tasks-card {
+        padding: 1rem;
+    }
+    
+    .task-btn {
+        padding: 0.4rem 0.6rem;
+        font-size: 0.8rem;
+    }
+}
+
+/* Confirmation dialog styles */
+.confirm-dialog {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.confirm-dialog.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.confirm-box {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 15px;
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.confirm-box h3 {
+    color: #2d3748;
+    margin-bottom: 1rem;
+}
+
+.confirm-box p {
+    color: #718096;
+    margin-bottom: 1.5rem;
+}
+
+.confirm-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.confirm-btn {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.confirm-yes {
+    background: #e53e3e;
+    color: #fff;
+}
+
+.confirm-yes:hover {
+    background: #c53030;
+}
+
+.confirm-no {
+    background: #718096;
+    color: #fff;
+}
+
+.confirm-no:hover {
+    background: #4a5568;
+}

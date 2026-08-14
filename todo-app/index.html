@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Master - Productivity Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <h1 class="app-title">Task Master</h1>
+            <p class="app-subtitle">Your Personal Productivity Dashboard</p>
+        </header>
+
+        <!-- Task Input Section -->
+        <section class="input-section">
+            <div class="input-container">
+                <input type="text" id="task-input" class="task-input" placeholder="What needs to be done?" aria-label="New task">
+                <button id="add-task-btn" class="add-btn">Add Task</button>
+            </div>
+            <div class="search-container">
+                <input type="text" id="search-input" class="search-input" placeholder="Search tasks..." aria-label="Search tasks">
+            </div>
+        </section>
+
+        <!-- Task Counters -->
+        <section class="counters-section">
+            <div class="counter pending-counter">
+                <span id="pending-count">0</span> Pending
+            </div>
+            <div class="counter completed-counter">
+                <span id="completed-count">0</span> Completed
+            </div>
+            <button id="clear-completed-btn" class="clear-completed-btn">Clear Completed</button>
+        </section>
+
+        <!-- Pending Tasks -->
+        <section class="tasks-section">
+            <div class="tasks-card pending-card">
+                <h2 class="card-title">Pending Tasks</h2>
+                <ul id="pending-tasks" class="task-list">
+                    <!-- Tasks will be dynamically inserted here -->
+                </ul>
+                <div id="pending-empty" class="empty-state">
+                    <p>No pending tasks. You're all caught up!</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Completed Tasks -->
+        <section class="tasks-section">
+            <div class="tasks-card completed-card">
+                <h2 class="card-title">Completed Tasks</h2>
+                <ul id="completed-tasks" class="task-list">
+                    <!-- Tasks will be dynamically inserted here -->
+                </ul>
+                <div id="completed-empty" class="empty-state">
+                    <p>No completed tasks yet.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
