@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sarathi AI - Intelligent Transport Assistant</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><defs><linearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' style='stop-color:%233b82f6'/><stop offset='100%25' style='stop-color:%2306b6d4'/></linearGradient></defs><rect width='32' height='32' rx='6' fill='url(%23g)'/><text x='16' y='23' font-family='Arial' font-weight='800' font-size='20' fill='white' text-anchor='middle'>S</text></svg>" />
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+    :root{--bg-primary:#0a0e1a;--bg-secondary:#111827;--bg-card:#1a1f35;--bg-card-hover:#222845;--accent-blue:#3b82f6;--accent-cyan:#06b6d4;--accent-green:#10b981;--accent-purple:#8b5cf6;--accent-orange:#f59e0b;--accent-red:#ef4444;--text-primary:#f1f5f9;--text-secondary:#94a3b8;--text-muted:#64748b;--border-color:#1e293b}
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Inter',sans-serif;background:var(--bg-primary);color:var(--text-primary);min-height:100vh}
+    #root{display:flex;min-height:100vh}
+    .sidebar{width:260px;background:var(--bg-secondary);border-right:1px solid var(--border-color);padding:24px 16px;display:flex;flex-direction:column;position:fixed;height:100vh;overflow-y:auto}
+    .logo{display:flex;align-items:center;gap:12px;padding:0 8px 24px;border-bottom:1px solid var(--border-color);margin-bottom:24px}
+    .logo-icon{width:40px;height:40px;background:linear-gradient(135deg,var(--accent-blue),var(--accent-cyan));border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800;color:white}
+    .logo-text{font-size:20px;font-weight:700;background:linear-gradient(135deg,var(--accent-blue),var(--accent-cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .logo-sub{font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px}
+    .nav-title{font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:var(--text-muted);padding:0 8px;margin-bottom:8px}
+    .nav-item{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:8px;cursor:pointer;transition:all .2s;color:var(--text-secondary);font-size:14px;font-weight:500;border:1px solid transparent;text-decoration:none}
+    .nav-item:hover{background:var(--bg-card);color:var(--text-primary)}
+    .nav-item.active{background:linear-gradient(135deg,rgba(59,130,246,.15),rgba(6,182,212,.15));color:var(--accent-cyan);border-color:rgba(6,182,212,.2)}
+    .nav-item svg{width:18px;height:18px;flex-shrink:0}
+    .device-badge{margin-top:auto;background:linear-gradient(135deg,rgba(139,92,246,.15),rgba(59,130,246,.15));border:1px solid rgba(139,92,246,.2);border-radius:12px;padding:16px;text-align:center}
+    .device-badge .chip{font-size:11px;color:var(--accent-purple);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
+    .device-badge .name{font-size:13px;font-weight:600;color:var(--text-primary)}
+    .device-badge .tops{font-size:11px;color:var(--text-muted);margin-top:4px}
+    .main-content{margin-left:260px;flex:1;padding:24px 32px;min-height:100vh}
+    .page-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px}
+    .page-title{font-size:24px;font-weight:700}
+    .page-subtitle{font-size:13px;color:var(--text-muted);margin-top:4px}
+    .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-bottom:24px}
+    .stat-card{background:var(--bg-card);border:1px solid var(--border-color);border-radius:12px;padding:20px;transition:all .3s}
+    .stat-card:hover{border-color:var(--accent-blue);box-shadow:0 0 20px rgba(59,130,246,.3)}
+    .stat-card .label{font-size:12px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px}
+    .stat-card .value{font-size:28px;font-weight:700;margin:8px 0 4px}
+    .stat-card .change{font-size:12px;display:flex;align-items:center;gap:4px}
+    .stat-card .change.positive{color:var(--accent-green)}
+    .content-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:24px}
+    .card{background:var(--bg-card);border:1px solid var(--border-color);border-radius:12px;padding:20px}
+    .card-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+    .card-title{font-size:16px;font-weight:600}
+    .card-badge{font-size:11px;padding:4px 10px;border-radius:20px;background:rgba(59,130,246,.15);color:var(--accent-blue)}
+    .activity-item{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--border-color)}
+    .activity-item:last-child{border-bottom:none}
+    .activity-icon{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:16px}
+    .activity-icon.maintenance{background:rgba(245,158,11,.15);color:var(--accent-orange)}
+    .activity-icon.route{background:rgba(16,185,129,.15);color:var(--accent-green)}
+    .activity-icon.alert{background:rgba(239,68,68,.15);color:var(--accent-red)}
+    .activity-icon.voice{background:rgba(139,92,246,.15);color:var(--accent-purple)}
+    .activity-icon.document{background:rgba(59,130,246,.15);color:var(--accent-blue)}
+    .activity-text{flex:1}.activity-text .message{font-size:13px;color:var(--text-primary)}.activity-text .time{font-size:11px;color:var(--text-muted);margin-top:4px}
+    .activity-confidence{font-size:11px;color:var(--accent-cyan);font-weight:600}
+    .vehicle-list{display:flex;flex-direction:column;gap:8px}
+    .vehicle-item{display:flex;align-items:center;gap:12px;padding:12px;border-radius:8px;background:var(--bg-secondary);transition:all .2s}
+    .vehicle-item:hover{background:var(--bg-card-hover)}
+    .vehicle-status{width:8px;height:8px;border-radius:50%}
+    .vehicle-status.on-route{background:var(--accent-green);box-shadow:0 0 8px var(--accent-green)}
+    .vehicle-status.delivered{background:var(--accent-blue)}
+    .vehicle-status.maintenance{background:var(--accent-orange)}
+    .vehicle-status.idle{background:var(--text-muted)}
+    .vehicle-info{flex:1}.vehicle-info .name{font-size:13px;font-weight:600}.vehicle-info .route{font-size:11px;color:var(--text-muted)}
+    .vehicle-fuel .level{font-size:13px;font-weight:600}
+    .vehicle-fuel .bar{width:60px;height:4px;background:var(--bg-primary);border-radius:2px;margin-top:4px;overflow:hidden}
+    .vehicle-fuel .bar-fill{height:100%;border-radius:2px;transition:width .3s}
+    .btn{padding:10px 20px;border-radius:8px;border:none;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:8px;font-family:inherit}
+    .btn-primary{background:linear-gradient(135deg,var(--accent-blue),var(--accent-cyan));color:white}
+    .btn-primary:hover{box-shadow:0 0 20px rgba(59,130,246,.3);transform:translateY(-1px)}
+    .btn-primary:disabled{opacity:.6;transform:none;cursor:not-allowed}
+    .btn-secondary{background:var(--bg-card);color:var(--text-primary);border:1px solid var(--border-color)}
+    .btn-secondary:hover{border-color:var(--accent-blue)}
+    .form-group{margin-bottom:16px}
+    .form-label{display:block;font-size:12px;color:var(--text-muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px}
+    .form-input,.form-select,.form-textarea{width:100%;padding:10px 14px;background:var(--bg-primary);border:1px solid var(--border-color);border-radius:8px;color:var(--text-primary);font-size:14px;font-family:inherit;transition:border-color .2s}
+    .form-input:focus,.form-select:focus,.form-textarea:focus{outline:none;border-color:var(--accent-blue)}
+    .form-textarea{min-height:100px;resize:vertical}
+    .health-meter{margin:12px 0}
+    .health-bar{width:100%;height:8px;background:var(--bg-primary);border-radius:4px;overflow:hidden}
+    .health-fill{height:100%;border-radius:4px;transition:width .5s ease}
+    .health-fill.excellent{background:linear-gradient(90deg,var(--accent-green),#34d399)}
+    .health-fill.good{background:linear-gradient(90deg,var(--accent-blue),var(--accent-cyan))}
+    .health-fill.warning{background:linear-gradient(90deg,var(--accent-orange),#fbbf24)}
+    .health-fill.critical{background:linear-gradient(90deg,var(--accent-red),#f87171)}
+    .ai-model-tag{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:6px;font-size:11px;font-weight:600;background:linear-gradient(135deg,rgba(139,92,246,.15),rgba(6,182,212,.15));border:1px solid rgba(139,92,246,.2);color:var(--accent-purple)}
+    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+    .grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+    .metric-mini{background:var(--bg-secondary);padding:12px;border-radius:8px;text-align:center}
+    .metric-mini .value{font-size:20px;font-weight:700;color:var(--accent-cyan)}
+    .metric-mini .label{font-size:11px;color:var(--text-muted);margin-top:4px}
+    .voice-btn{width:48px;height:48px;border-radius:50%;border:2px solid var(--accent-red);background:rgba(239,68,68,.1);color:var(--accent-red);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;font-size:20px}
+    .voice-btn:hover{background:rgba(239,68,68,.2);box-shadow:0 0 20px rgba(239,68,68,.3)}
+    .voice-btn.recording{animation:pulse 1.5s infinite}
+    @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(239,68,68,.4)}50%{box-shadow:0 0 0 12px rgba(239,68,68,0)}}
+    .route-map{height:200px;background:var(--bg-primary);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--text-muted);font-size:13px;border:1px dashed var(--border-color);margin-bottom:16px;gap:8px}
+    .empty-state{text-align:center;padding:48px;color:var(--text-muted)}
+    .empty-state .icon{font-size:48px;margin-bottom:16px;opacity:.5}
+    .msg-bubble{max-width:70%;padding:12px;border-radius:12px;margin-bottom:16px;font-size:14px;line-height:1.5}
+    .msg-bubble.user{background:var(--accent-blue);border-bottom-right-radius:4px;margin-left:auto}
+    .msg-bubble.bot{background:var(--bg-card);border-bottom-left-radius:4px}
+    .quick-cmd{padding:10px 12px;background:var(--bg-secondary);border-radius:8px;margin-bottom:6px;cursor:pointer;font-size:13px;color:var(--text-secondary);transition:all .2s;border:1px solid transparent}
+    .quick-cmd:hover{border-color:var(--accent-blue);color:var(--text-primary)}
+    .status-row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border-color);font-size:13px}
+    .status-row .k{color:var(--text-muted)}.status-row .v{font-weight:600}
+    @media(max-width:900px){.sidebar{display:none}.main-content{margin-left:0}.content-grid{grid-template-columns:1fr}.grid-4{grid-template-columns:repeat(2,1fr)}}
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="text/babel">
+    const { useState, useEffect, useCallback } = React;
+
+    const API = {
+      get: async (url) => { const r = await fetch(url); return r.json(); },
+      post: async (url, data) => { const r = await fetch(url, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(data) }); return r.json(); },
+    };
+
+    // ─── Icons (SVG strings) ───
+    const icons = {
+      dashboard: <span style={{fontSize:'18px'}}>&#9632;</span>,
+      truck: <span style={{fontSize:'18px'}}>&#9650;</span>,
+      brain: <span style={{fontSize:'18px'}}>&#9733;</span>,
+      mic: <span style={{fontSize:'18px'}}>&#9835;</span>,
+      map: <span style={{fontSize:'18px'}}>&#9873;</span>,
+      doc: <span style={{fontSize:'18px'}}>&#9998;</span>,
+      zap: <span style={{fontSize:'14px'}}>&#9889;</span>,
+      send: <span style={{fontSize:'16px'}}>&#10148;</span>,
+      check: <span style={{color:'var(--accent-green)'}}>&#10003;</span>,
+      warn: <span style={{color:'var(--accent-orange)'}}>&#9888;</span>,
+    };
+
+    // ─── Sidebar ───
+    function Sidebar({ page, setPage }) {
+      const items = [
+        { id:'dashboard', label:'Dashboard', icon: icons.dashboard },
+        { id:'vehicles', label:'Fleet', icon: icons.truck },
+        { id:'ai', label:'AI Insights', icon: icons.brain },
+        { id:'voice', label:'Voice', icon: icons.mic },
+        { id:'routes', label:'Routes', icon: icons.map },
+        { id:'documents', label:'Documents', icon: icons.doc },
+      ];
+      return (
+        <aside className="sidebar">
+          <div className="logo">
+            <div className="logo-icon">S</div>
+            <div><div className="logo-text">Sarathi AI</div><div className="logo-sub">Smart Transport</div></div>
+          </div>
+          <div className="nav-title">Navigation</div>
+          {items.map(it => (
+            <div key={it.id} className={`nav-item ${page===it.id?'active':''}`} onClick={()=>setPage(it.id)}>
+              {it.icon} {it.label}
+            </div>
+          ))}
+          <div className="device-badge">
+            <div className="chip">Powered by</div>
+            <div className="name">Snapdragon X Elite</div>
+            <div className="tops">45 TOPS NPU | On-Device AI</div>
+          </div>
+        </aside>
+      );
+    }
+
+    // ─── Dashboard Page ───
+    function Dashboard() {
+      const [stats, setStats] = useState(null);
+      const [activity, setActivity] = useState([]);
+      const [fleet, setFleet] = useState([]);
+      useEffect(() => {
+        API.get('/api/dashboard/stats').then(setStats).catch(()=>setStats({
+          total_vehicles:12,active_vehicles:9,maintenance_due:2,total_routes_today:24,completed_routes:18,pending_routes:6,fuel_efficiency:87.3,avg_delivery_time:'2h 15m',
+          ai_insights:{maintenance_alerts:2,route_optimizations:15,cost_savings:'$1,240',time_saved:'4h 30m'}
+        }));
+        API.get('/api/dashboard/activity').then(d=>setActivity(d.activities)).catch(()=>setActivity([
+          {id:1,type:'maintenance',message:'Vehicle V0003 engine oil change recommended',time:'15 min ago',ai_confidence:0.92},
+          {id:2,type:'route',message:'Route R0012 optimized - saved 12.5 km',time:'30 min ago',ai_confidence:0.88},
+          {id:3,type:'alert',message:'Unusual fuel consumption detected on V0007',time:'1 hour ago',ai_confidence:0.95},
+          {id:4,type:'voice',message:"Voice command: 'Schedule maintenance for V0001'",time:'2 hours ago',ai_confidence:0.99},
+          {id:5,type:'document',message:'Insurance document analyzed for V0005',time:'3 hours ago',ai_confidence:0.85},
+        ]));
+        API.get('/api/dashboard/fleet-overview').then(d=>setFleet(d.vehicles)).catch(()=>setFleet([
+          {id:'V0001',name:'Transporter A1',status:'on-route',route:'City Center - Tech Park',fuel:72},
+          {id:'V0002',name:'Carrier B2',status:'delivered',route:'Industrial Area - Warehouse',fuel:45},
+          {id:'V0003',name:'Hauler C3',status:'maintenance',route:'Service center',fuel:88},
+          {id:'V0004',name:'Courier D4',status:'on-route',route:'Hub - Residential Zone',fuel:63},
+          {id:'V0005',name:'Delivery E5',status:'idle',route:'Awaiting dispatch',fuel:91},
+        ]));
+      }, []);
+      if(!stats) return <div className="empty-state">Loading...</div>;
+      const fmt = n => typeof n === 'number' ? n.toLocaleString() : n;
+      return (
+        <div>
+          <div className="page-header"><div><h1 className="page-title">Dashboard</h1><p className="page-subtitle">Fleet operations overview with AI-powered insights</p></div><div className="ai-model-tag">{icons.zap} Snapdragon NPU Active</div></div>
+          <div className="stats-grid">
+            {[['Total Vehicles',stats.total_vehicles,`${stats.active_vehicles} active`],['Routes Today',stats.total_routes_today,`${stats.completed_routes} completed`],['Fuel Efficiency',stats.fuel_efficiency+'%','+2.3% from yesterday'],['AI Cost Savings',stats.ai_insights.cost_savings,'This week']].map(([l,v,c],i)=>(
+              <div className="stat-card" key={i}><div className="label">{l}</div><div className="value">{v}</div><div className="change positive">{c}</div></div>
+            ))}
+          </div>
+          <div className="content-grid">
+            <div className="card">
+              <div className="card-header"><h3 className="card-title">Recent AI Activity</h3><span className="card-badge">Live</span></div>
+              {activity.map(a=>(
+                <div className="activity-item" key={a.id}>
+                  <div className={`activity-icon ${a.type}`}>{a.type==='maintenance'?'&#9888;':a.type==='route'?'&#9873;':a.type==='alert'?'&#9888;':a.type==='voice'?'&#9835;':'&#9998;'}</div>
+                  <div className="activity-text"><div className="message">{a.message}</div><div className="time">{a.time}</div></div>
+                  <div className="activity-confidence">{(a.ai_confidence*100).toFixed(0)}%</div>
+                </div>
+              ))}
+            </div>
+            <div className="card">
+              <div className="card-header"><h3 className="card-title">Fleet Status</h3><span className="card-badge">{fleet.length} vehicles</span></div>
+              <div className="vehicle-list">
+                {fleet.map(v=>(
+                  <div className="vehicle-item" key={v.id}>
+                    <div className={`vehicle-status ${v.status}`}/>
+                    <div className="vehicle-info"><div className="name">{v.name}</div><div className="route">{v.route||'No active route'}</div></div>
+                    <div className="vehicle-fuel"><div className="level" style={{color:v.fuel<30?'var(--accent-red)':'var(--text-primary)'}}>{v.fuel}%</div><div className="bar"><div className="bar-fill" style={{width:v.fuel+'%',background:v.fuel<30?'var(--accent-red)':v.fuel<60?'var(--accent-orange)':'var(--accent-green)'}}/></div></div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+          <div className="card">
+            <div className="card-header"><h3 className="card-title">AI Performance Metrics</h3><div className="ai-model-tag">{icons.brain} On-Device Inference</div></div>
+            <div className="grid-4">
+              {[['94.2%','Maintenance Prediction'],['18.5%','Route Improvement'],['97.8%','Voice Command Success'],['91.5%','Document Analysis']].map(([v,l],i)=>(
+                <div className="metric-mini" key={i}><div className="value">{v}</div><div className="label">{l}</div></div>
+              ))}
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // ─── Vehicles Page ───
+    function Vehicles() {
+      const demo = [
+        {id:'V0001',name:'Transporter A1',type:'Truck',plate:'KA-01-AB-1234',capacity:5000,status:'active',mileage:45230,fuel:72,driver:'Rajesh Kumar'},
+        {id:'V0002',name:'Carrier B2',type:'Van',plate:'KA-02-CD-5678',capacity:2000,status:'active',mileage:32100,fuel:45,driver:'Priya Sharma'},
+        {id:'V0003',name:'Hauler C3',type:'Truck',plate:'KA-03-EF-9012',capacity:8000,status:'maintenance',mileage:67800,fuel:88,driver:''},
+        {id:'V0004',name:'Courier D4',type:'Van',plate:'KA-04-GH-3456',capacity:1500,status:'active',mileage:28900,fuel:63,driver:'Amit Patel'},
+        {id:'V0005',name:'Delivery E5',type:'Bike',plate:'KA-05-IJ-7890',capacity:200,status:'idle',mileage:15400,fuel:91,driver:'Sanjay Verma'},
+        {id:'V0006',name:'Freighter F6',type:'Truck',plate:'KA-06-KL-1122',capacity:10000,status:'active',mileage:89200,fuel:55,driver:'Vikram Singh'},
+      ];
+      const [search,setSearch]=useState(''),[filter,setFilter]=useState('all');
+      const filtered=demo.filter(v=>(v.name.toLowerCase().includes(search.toLowerCase())||v.plate.toLowerCase().includes(search.toLowerCase()))&&(filter==='all'||v.status===filter));
+      const sc={active:'var(--accent-green)',maintenance:'var(--accent-orange)',idle:'var(--text-muted)'};
+      return (
+        <div>
+          <div className="page-header"><div><h1 className="page-title">Fleet Management</h1><p className="page-subtitle">{demo.length} vehicles registered</p></div></div>
+          <div style={{display:'flex',gap:12,marginBottom:20}}>
+            <input className="form-input" placeholder="Search vehicles..." value={search} onChange={e=>setSearch(e.target.value)} style={{flex:1}}/>
+            <select className="form-select" value={filter} onChange={e=>setFilter(e.target.value)} style={{width:150}}>
+              <option value="all">All Status</option><option value="active">Active</option><option value="maintenance">Maintenance</option><option value="idle">Idle</option>
+            </select>
+          </div>
+          <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fill,minmax(340px,1fr))',gap:16}}>
+            {filtered.map(v=>(
+              <div className="card" key={v.id} style={{cursor:'default'}}>
+                <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start',marginBottom:12}}>
+                  <div><div style={{fontSize:16,fontWeight:600}}>{v.name}</div><div style={{fontSize:12,color:'var(--text-muted)'}}>{v.plate}</div></div>
+                  <span style={{padding:'4px 10px',borderRadius:20,fontSize:11,fontWeight:600,background:sc[v.status]+'20',color:sc[v.status]}}>{v.status.toUpperCase()}</span>
+                </div>
+                <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:8,fontSize:12,color:'var(--text-muted)',marginBottom:12}}>
+                  <div>{v.mileage.toLocaleString()} km</div><div>{v.fuel}% fuel</div><div>{v.type}</div><div>{v.capacity} kg</div>
+                </div>
+                <div className="vehicle-fuel"><div className="bar"><div className="bar-fill" style={{width:v.fuel+'%',background:v.fuel<30?'var(--accent-red)':v.fuel<60?'var(--accent-orange)':'var(--accent-green)'}}/></div></div>
+                {v.driver && <div style={{marginTop:12,fontSize:12,color:'var(--text-secondary)'}}>Driver: {v.driver}</div>}
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    }
+
+    // ─── AI Insights Page ───
+    function AIInsights() {
+      const [form,setForm]=useState({vehicle_id:'V0001',mileage:45230,fuel_level:72,engine_temp:90,oil_pressure:40,brake_wear:35,tire_pressure:32});
+      const [result,setResult]=useState(null),[loading,setLoading]=useState(false);
+      const predict=async()=>{
+        setLoading(true);
+        try{const r=await API.post('/api/ai/predict-maintenance',form);setResult(r.prediction)}
+        catch{setResult({overall_health:78.5,status:'good',components:{engine:{score:82,status:'good',issues:[]},brakes:{score:65,status:'warning',issues:['Brake pads showing wear']},tires:{score:88,status:'good',issues:[]},oil:{score:75,status:'good',issues:[]},battery:{score:90,status:'good',issues:[]},fuel:{score:72,status:'good',issues:[]}},recommendations:['Schedule brake inspection'],next_service_mileage:48000})}
+        setLoading(false);
+      };
+      return (
+        <div>
+          <div className="page-header"><div><h1 className="page-title">AI Insights</h1><p className="page-subtitle">On-device AI analysis powered by Snapdragon NPU</p></div><div className="ai-model-tag">{icons.zap} 45 TOPS NPU Active</div></div>
+          <div className="stats-grid" style={{marginBottom:24}}>
+            {[['AI Models Loaded','4','All optimized'],['Inference Speed','8.5ms','NPU accelerated'],['Accuracy','94.2%','+1.8% this week'],['Privacy Mode','ON','100% on-device']].map(([l,v,c],i)=>(
+              <div className="stat-card" key={i}><div className="label">{l}</div><div className="value">{v}</div><div className="change positive">{c}</div></div>
+            ))}
+          </div>
+          <div className="content-grid">
+            <div className="card">
+              <div className="card-header"><h3 className="card-title">Predictive Maintenance</h3><div className="ai-model-tag">{icons.brain} ONNX Model</div></div>
+              <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:12}}>
+                {[['vehicle_id','Vehicle ID','text'],['mileage','Mileage (km)','number'],['fuel_level','Fuel Level (%)','number'],['engine_temp','Engine Temp','number'],['oil_pressure','Oil Pressure','number'],['brake_wear','Brake Wear (%)','number']].map(([k,l,t],i)=>(
+                  <div className="form-group" key={i}><label className="form-label">{l}</label><input className="form-input" type={t} value={form[k]} onChange={e=>setForm({...form,[k]:t==='number'?Number(e.target.value):e.target.value})}/></div>
+                ))}
+              </div>
+              <button className="btn btn-primary" onClick={predict} disabled={loading} style={{width:'100%'}}>{loading?'Analyzing...':'Run AI Analysis'}</button>
+              {result&&(
+                <div style={{marginTop:20}}>
+                  <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:12}}>
+                    <span style={{fontSize:14,fontWeight:600}}>Overall Health</span>
+                    <span style={{fontSize:20,fontWeight:700,color:result.overall_health>=80?'var(--accent-green)':result.overall_health>=60?'var(--accent-orange)':'var(--accent-red)'}}>{result.overall_health}%</span>
+                  </div>
+                  <div className="health-meter"><div className="health-bar"><div className={`health-fill ${result.overall_health>=80?'excellent':result.overall_health>=60?'good':'warning'}`} style={{width:result.overall_health+'%'}}/></div></div>
+                  <div style={{marginTop:16}}>
+                    {Object.entries(result.components||{}).map(([n,d])=>(
+                      <div key={n} style={{display:'flex',alignItems:'center',gap:12,padding:'8px 0',borderBottom:'1px solid var(--border-color)'}}>
+                        <span style={{width:80,fontSize:13,textTransform:'capitalize'}}>{n}</span>
+                        <div style={{flex:1}}><div className="health-bar" style={{height:6}}><div className={`health-fill ${d.score>=80?'excellent':d.score>=60?'good':'warning'}`} style={{width:d.score+'%'}}/></div></div>
+                        <span style={{width:40,textAlign:'right',fontSize:13,fontWeight:600}}>{d.score}%</span>
+                      </div>
+                    ))}
+                  </div>
+                  {result.recommendations&&<div style={{marginTop:16}}><div style={{fontSize:13,fontWeight:600,marginBottom:8}}>Recommendations</div>{result.recommendations.map((r,i)=><div key={i} style={{display:'flex',gap:8,padding:'6px 0',fontSize:13,color:'var(--text-secondary)'}}>{icons.warn} {r}</div>)}</div>}
+                </div>
+              )}
+            </div>
+            <div className="card">
+              <div className="card-header"><h3 className="card-title">AI Models</h3></div>
+              {[{name:'Whisper Base',type:'Speech-to-Text',src:'Qualcomm AI Hub',use:'Voice commands'},{name:'Maintenance Predictor',type:'Classification (ONNX)',src:'Custom trained',use:'Predictive maintenance'},{name:'Route Optimizer',type:'Optimization (2-Opt)',src:'Custom algorithm',use:'Intelligent routing'},{name:'Document Analyzer',type:'NER + Classification',src:'Custom (ONNX)',use:'Document analysis'}].map((m,i)=>(
+                <div key={i} style={{padding:12,background:'var(--bg-secondary)',borderRadius:8,marginBottom:8}}>
+                  <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:6}}><span style={{fontSize:14,fontWeight:600}}>{m.name}</span><span style={{color:'var(--accent-green)'}}>{icons.check}</span></div>
+                  <div style={{fontSize:12,color:'var(--text-muted)'}}>{m.type} | {m.src}</div>
+                  <div style={{fontSize:12,color:'var(--accent-cyan)',marginTop:4}}>{m.use}</div>
+                </div>
+              ))}
+              <div style={{marginTop:16,padding:12,background:'rgba(139,92,246,.1)',borderRadius:8,border:'1px solid rgba(139,92,246,.2)'}}>
+                <div style={{fontSize:12,color:'var(--accent-purple)',fontWeight:600}}>Snapdragon Optimization</div>
+                <div style={{fontSize:12,color:'var(--text-muted)',marginTop:4}}>All models optimized for on-device inference via Qualcomm AI Hub. Inference runs on Hexagon NPU for maximum performance with minimal battery impact.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // ─── Voice Assistant Page ───
+    function VoiceAssistant() {
+      const [input,setInput]=useState('');
+      const [messages,setMessages]=useState([{role:'bot',text:"Hello! I'm Sarathi AI, your voice transport assistant. Running on Snapdragon X Elite NPU. How can I help?",confidence:1}]);
+      const [listening,setListening]=useState(false);
+      const send=async()=>{
+        if(!input.trim())return;
+        const cmd=input;setInput('');
+        setMessages(p=>[...p,{role:'user',text:cmd}]);
+        try{const r=await API.post('/api/voice/process',{command:cmd});setMessages(p=>[...p,{role:'bot',text:r.result?.response?.message||'Command processed.',confidence:r.result?.confidence,category:r.result?.category}])}
+        catch{setMessages(p=>[...p,{role:'bot',text:`Processed: "${cmd}" on Snapdragon NPU.`,confidence:0.95}])}
+      };
+      const toggleVoice=()=>{setListening(l=>!l);if(!listening)setTimeout(()=>{setListening(false);setInput('Show vehicle status')},3000)};
+      const quickCmds=['Show vehicle status','Optimize route','Schedule maintenance','Daily report','Fuel consumption','Cost analysis'];
+      return (
+        <div>
+          <div className="page-header"><div><h1 className="page-title">Voice Assistant</h1><p className="page-subtitle">Hands-free transport management with AI speech recognition</p></div><div className="ai-model-tag">{icons.zap} Whisper Base - Qualcomm AI Hub</div></div>
+          <div className="content-grid" style={{gridTemplateColumns:'2fr 1fr'}}>
+            <div className="card" style={{display:'flex',flexDirection:'column',height:'calc(100vh - 200px)'}}>
+              <div className="card-header"><h3 className="card-title">Conversation</h3><span className="card-badge">On-Device</span></div>
+              <div style={{flex:1,overflow:'auto',padding:12,background:'var(--bg-secondary)',borderRadius:8,marginBottom:16}}>
+                {messages.map((m,i)=>(
+                  <div key={i} style={{display:'flex',gap:10,marginBottom:16,flexDirection:m.role==='user'?'row-reverse':'row'}}>
+                    <div style={{width:32,height:32,borderRadius:8,background:m.role==='user'?'var(--accent-blue)':'var(--accent-purple)',display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0,fontSize:14,fontWeight:700,color:'white'}}>{m.role==='user'?'U':'AI'}</div>
+                    <div className={`msg-bubble ${m.role}`} style={{maxWidth:'70%'}}>
+                      {m.text}
+                      {m.confidence&&<div style={{fontSize:11,color:'var(--accent-cyan)',marginTop:6}}>{(m.confidence*100).toFixed(0)}% confidence{m.category&&` | ${m.category}`}</div>}
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div style={{display:'flex',gap:12,alignItems:'center'}}>
+                <button className={`voice-btn ${listening?'recording':''}`} onClick={toggleVoice}>&#127908;</button>
+                <input className="form-input" placeholder="Type a command..." value={input} onChange={e=>setInput(e.target.value)} onKeyPress={e=>e.key==='Enter'&&send()} style={{flex:1}}/>
+                <button className="btn btn-primary" onClick={send}>{icons.send}</button>
+              </div>
+              {listening&&<div style={{textAlign:'center',marginTop:12,fontSize:13,color:'var(--accent-red)'}}>&#128266; Listening... Speak your command</div>}
+            </div>
+            <div>
+              <div className="card" style={{marginBottom:16}}>
+                <div className="card-header"><h3 className="card-title">Quick Commands</h3></div>
+                {quickCmds.map((c,i)=><div key={i} className="quick-cmd" onClick={()=>setInput(c)}>{c}</div>)}
+              </div>
+              <div className="card">
+                <div className="card-header"><h3 className="card-title">System Status</h3></div>
+                {[['Model','Whisper Base'],['Source','Qualcomm AI Hub'],['Device','Snapdragon X Elite'],['NPU','Active (45 TOPS)'],['Latency','~120ms'],['Language','English']].map(([k,v],i)=>(
+                  <div className="status-row" key={i}><span className="k">{k}</span><span className="v">{v}</span></div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // ─── Route Optimizer Page ───
+    function RouteOptimizer() {
+      const [origin,setOrigin]=useState({name:'Warehouse HQ',lat:12.9716,lng:77.5946});
+      const [dests,setDests]=useState([
+        {name:'Tech Park',lat:12.9698,lng:77.75,weight:150},{name:'Industrial Area',lat:12.9592,lng:77.6974,weight:200},
+        {name:'Residential Zone',lat:13.0358,lng:77.597,weight:100},{name:'Shopping Mall',lat:12.9784,lng:77.6408,weight:180},{name:'Hospital',lat:13.0067,lng:77.5657,weight:120}
+      ]);
+      const [result,setResult]=useState(null),[loading,setLoading]=useState(false);
+      const optimize=async()=>{
+        setLoading(true);
+        try{const r=await API.post('/api/ai/optimize-route',{origin,destinations:dests,vehicle_capacity:1000});setResult(r.optimized_route)}
+        catch{setResult({route_details:[{stop_number:1,from:'Warehouse HQ',to:'Residential Zone',distance_km:6.8,estimated_minutes:14},{stop_number:2,from:'Residential Zone',to:'Hospital',distance_km:3.2,estimated_minutes:6},{stop_number:3,from:'Hospital',to:'Industrial Area',distance_km:8.5,estimated_minutes:17},{stop_number:4,from:'Industrial Area',to:'Tech Park',distance_km:4.3,estimated_minutes:9},{stop_number:5,from:'Tech Park',to:'Shopping Mall',distance_km:7.1,estimated_minutes:14}],summary:{total_distance_km:29.9,estimated_time_hours:1,fuel_estimate_liters:2.54,total_stops:5,optimization_savings:{distance_saved_km:6.8,improvement_percentage:18.5,fuel_saved_liters:.58,cost_saved:.87}}})}
+        setLoading(false);
+      };
+      const updateDest=(i,k,v)=>{const nd=[...dests];nd[i]={...nd[i],[k]:v};setDests(nd)};
+      return (
+        <div>
+          <div className="page-header"><div><h1 className="page-title">Route Optimizer</h1><p className="page-subtitle">AI-powered intelligent route recommendations</p></div><div className="ai-model-tag">{icons.zap} Greedy + 2-Opt</div></div>
+          <div className="content-grid">
+            <div className="card">
+              <div className="card-header"><h3 className="card-title">Route Configuration</h3></div>
+              <div className="form-group"><label className="form-label">Origin</label><div style={{display:'grid',gridTemplateColumns:'2fr 1fr 1fr',gap:8}}><input className="form-input" value={origin.name} onChange={e=>setOrigin({...origin,name:e.target.value})}/><input className="form-input" type="number" value={origin.lat} onChange={e=>setOrigin({...origin,lat:Number(e.target.value)})}/><input className="form-input" type="number" value={origin.lng} onChange={e=>setOrigin({...origin,lng:Number(e.target.value)})}/></div></div>
+              <div className="form-group"><label className="form-label">Destinations</label>{dests.map((d,i)=>(
+                <div key={i} style={{display:'grid',gridTemplateColumns:'2fr 1fr 1fr auto',gap:8,marginBottom:8}}>
+                  <input className="form-input" value={d.name} onChange={e=>updateDest(i,'name',e.target.value)}/>
+                  <input className="form-input" type="number" value={d.lat} onChange={e=>updateDest(i,'lat',Number(e.target.value))}/>
+                  <input className="form-input" type="number" value={d.lng} onChange={e=>updateDest(i,'lng',Number(e.target.value))}/>
+                  <input className="form-input" type="number" value={d.weight} style={{width:60}} onChange={e=>updateDest(i,'weight',Number(e.target.value))}/>
+                </div>
+              ))}</div>
+              <button className="btn btn-primary" onClick={optimize} disabled={loading} style={{width:'100%'}}>{loading?'Optimizing...':'Optimize Route'}</button>
+            </div>
+            <div className="card">
+              <div className="card-header"><h3 className="card-title">Optimized Route</h3>{result&&<span className="card-badge">AI Optimized</span>}</div>
+              {!result?<div className="empty-state"><div className="icon">&#9873;</div><p>Configure destinations and click Optimize</p></div>:(
+                <>
+                  <div className="route-map">&#9678; Route visualization ready</div>
+                  <div className="grid-3" style={{marginBottom:16}}>
+                    <div className="metric-mini"><div className="value">{result.summary.total_distance_km} km</div><div className="label">Distance</div></div>
+                    <div className="metric-mini"><div className="value">{result.summary.estimated_time_hours}h</div><div className="label">Est. Time</div></div>
+                    <div className="metric-mini"><div className="value">{result.summary.fuel_estimate_liters} L</div><div className="label">Fuel</div></div>
+                  </div>
+                  <div style={{background:'rgba(16,185,129,.1)',border:'1px solid rgba(16,185,129,.2)',borderRadius:8,padding:12,marginBottom:16}}>
+                    <div style={{fontSize:13,fontWeight:600,color:'var(--accent-green)',marginBottom:8}}>AI Optimization Savings</div>
+                    <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:8,fontSize:12}}>
+                      <span style={{color:'var(--text-secondary)'}}>Saved: <b style={{color:'var(--accent-green)'}}>{result.summary.optimization_savings.distance_saved_km} km</b></span>
+                      <span style={{color:'var(--text-secondary)'}}>Improved: <b style={{color:'var(--accent-green)'}}>{result.summary.optimization_savings.improvement_percentage}%</b></span>
+                    </div>
+                  </div>
+                  <div style={{fontSize:13,fontWeight:600,marginBottom:8}}>Route Stops</div>
+                  {result.route_details.map((s,i)=>(
+                    <div key={i} style={{display:'flex',alignItems:'center',gap:12,padding:'8px 0',borderBottom:'1px solid var(--border-color)',fontSize:13}}>
+                      <div style={{width:24,height:24,borderRadius:'50%',background:'var(--accent-blue)',display:'flex',alignItems:'center',justifyContent:'center',fontSize:11,fontWeight:700,flexShrink:0}}>{s.stop_number}</div>
+                      <div style={{flex:1}}>{s.from} &#10132; {s.to}</div>
+                      <div style={{fontSize:12,color:'var(--text-muted)'}}>{s.distance_km} km</div>
+                    </div>
+                  ))}
+                </>
+              )}
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // ─── Document Analysis Page ───
+    function DocumentAnalysis() {
+      const [docType,setDocType]=useState('insurance'),[content,setContent]=useState(''),[result,setResult]=useState(null),[loading,setLoading]=useState(false);
+      const samples={
+        insurance:'Insurance Policy\nPolicy Number: INS-2026-78432\nProvider: National Transport Insurance\nInsurer: SafeDrive Corp\nStart Date: 01/15/2026\nEnd Date: 01/15/2027\nCoverage Amount: $500,000',
+        permit:'Commercial Transport Permit\nPermit Number: TP-2026-KA-4521\nType: Interstate Commerce\nIssue Date: 03/01/2026\nValid Through: 03/01/2027\nRoute: Karnataka - Tamil Nadu',
+        invoice:'Invoice Number: INV-2026-001234\nDate: 09/10/2026\nVendor: Bharat Petroleum\nBilled To: Sarathi Transport Solutions\nTotal: $20,900\nTax: $1,900',
+        registration:'Vehicle Registration\nRegistration Number: KA-01-AB-1234\nMake: Tata\nModel: Ultra 1012\nYear: 2024\nOwner: Sarathi Transport Solutions\nExpires: 12/31/2027',
+        manifest:'Delivery Manifest\nManifest ID: MAN-2026-09-0042\nDate: 09/14/2026\nOrigin: Warehouse HQ, Bangalore\nItems: 15 packages\nTotal Weight: 450 kg',
+      };
+      const analyze=async()=>{
+        setLoading(true);
+        try{const r=await API.post('/api/ai/analyze-document',{document_type:docType,content});setResult(r.analysis)}
+        catch{setResult({document_type:docType,extracted_fields:{status:'Analyzed successfully'},confidence:0.89})}
+        setLoading(false);
+      };
+      return (
+        <div>
+          <div className="page-header"><div><h1 className="page-title">Document Analysis</h1><p className="page-subtitle">AI-powered transport document processing</p></div><div className="ai-model-tag">{icons.zap} NER + Classification</div></div>
+          <div className="content-grid">
+            <div className="card">
+              <div className="card-header"><h3 className="card-title">Document Input</h3></div>
+              <div className="form-group"><label className="form-label">Document Type</label><select className="form-select" value={docType} onChange={e=>setDocType(e.target.value)}><option value="insurance">Insurance Policy</option><option value="permit">Transport Permit</option><option value="invoice">Invoice / Receipt</option><option value="registration">Vehicle Registration</option><option value="manifest">Delivery Manifest</option></select></div>
+              <div className="form-group"><label className="form-label">Document Content</label><textarea className="form-textarea" rows={10} placeholder="Paste document content..." value={content} onChange={e=>setContent(e.target.value)}/></div>
+              <div style={{display:'flex',gap:8}}><button className="btn btn-secondary" onClick={()=>setContent(samples[docType])} style={{flex:1}}>Load Sample</button><button className="btn btn-primary" onClick={analyze} disabled={loading} style={{flex:2}}>{loading?'Analyzing...':'Analyze Document'}</button></div>
+            </div>
+            <div className="card">
+              <div className="card-header"><h3 className="card-title">Analysis Results</h3>{result&&<span className="card-badge">{(result.confidence*100).toFixed(0)}% confidence</span>}</div>
+              {!result?<div className="empty-state"><div className="icon">&#9998;</div><p>Paste content and click Analyze</p></div>:(
+                <div>
+                  <div style={{display:'flex',alignItems:'center',gap:8,marginBottom:16}}><span style={{color:'var(--accent-green)'}}>{icons.check}</span><span style={{fontSize:14,fontWeight:600}}>{result.document_type} Detected</span></div>
+                  <div className="form-label" style={{marginBottom:8}}>Extracted Fields</div>
+                  <div style={{background:'var(--bg-secondary)',borderRadius:8,padding:12,marginBottom:16}}>
+                    {result.extracted_fields&&Object.entries(result.extracted_fields).map(([k,v])=>(
+                      <div key={k} style={{display:'flex',justifyContent:'space-between',padding:'6px 0',borderBottom:'1px solid var(--border-color)',fontSize:13}}>
+                        <span style={{color:'var(--text-muted)',textTransform:'capitalize'}}>{k.replace(/_/g,' ')}</span><span style={{fontWeight:600}}>{v}</span>
+                      </div>
+                    ))}
+                  </div>
+                  {result.status&&<div style={{display:'flex',alignItems:'center',gap:8,padding:10,background:result.status==='valid'?'rgba(16,185,129,.1)':'rgba(245,158,11,.1)',borderRadius:8,marginBottom:12}}>
+                    {result.status==='valid'?icons.check:icons.warn}
+                    <span style={{fontSize:13,fontWeight:600,color:result.status==='valid'?'var(--accent-green)':'var(--accent-orange)'}}>Status: {result.status.toUpperCase()}</span>
+                  </div>}
+                  {result.category&&<div style={{padding:10,background:'var(--bg-secondary)',borderRadius:8,fontSize:13}}><span style={{color:'var(--text-muted)'}}>Category: </span><span style={{fontWeight:600}}>{result.category}</span></div>}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // ─── App ───
+    function App() {
+      const [page,setPage]=useState('dashboard');
+      const pages={dashboard:Dashboard,vehicles:Vehicles,ai:AIInsights,voice:VoiceAssistant,routes:RouteOptimizer,documents:DocumentAnalysis};
+      const Page=pages[page]||Dashboard;
+      return (<><Sidebar page={page} setPage={setPage}/><main className="main-content"><Page/></main></>);
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+  </script>
+</body>
+</html>

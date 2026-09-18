@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">GK Quiz</string>
+    <string name="app_title">GK Quiz</string>
+    <string name="welcome_description">Test Your General Knowledge\n\nAnswer 10 questions across Science, Geography, History, Technology, and India.</string>
+    <string name="start_quiz_button">START QUIZ</string>
+    <string name="start_quiz_desc">Start the quiz</string>
+    <string name="question_counter_desc">Question progress</string>
+    <string name="score_desc">Current score</string>
+    <string name="progress_desc">Quiz progress</string>
+    <string name="question_desc">Current question</string>
+    <string name="options_desc">Answer options</string>
+    <string name="option_1_desc">Option 1</string>
+    <string name="option_2_desc">Option 2</string>
+    <string name="option_3_desc">Option 3</string>
+    <string name="option_4_desc">Option 4</string>
+    <string name="next_button">NEXT</string>
+    <string name="next_button_desc">Go to next question</string>
+    <string name="quiz_completed">Quiz Completed!</string>
+    <string name="total_questions_desc">Total number of questions</string>
+    <string name="correct_answers_desc">Number of correct answers</string>
+    <string name="incorrect_answers_desc">Number of incorrect answers</string>
+    <string name="score_percentage_desc">Score percentage</string>
+    <string name="restart_button">RESTART</string>
+    <string name="restart_button_desc">Restart the quiz</string>
+    <string name="exit_button">EXIT</string>
+    <string name="exit_button_desc">Exit the application</string>
+</resources>

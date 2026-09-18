@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Calculator</string>
+    <string name="expression_content_desc">Mathematical expression</string>
+    <string name="display_content_desc">Calculator display</string>
+    <string name="btn_0_desc">Number 0</string>
+    <string name="btn_1_desc">Number 1</string>
+    <string name="btn_2_desc">Number 2</string>
+    <string name="btn_3_desc">Number 3</string>
+    <string name="btn_4_desc">Number 4</string>
+    <string name="btn_5_desc">Number 5</string>
+    <string name="btn_6_desc">Number 6</string>
+    <string name="btn_7_desc">Number 7</string>
+    <string name="btn_8_desc">Number 8</string>
+    <string name="btn_9_desc">Number 9</string>
+    <string name="btn_decimal_desc">Decimal point</string>
+    <string name="btn_add_desc">Addition</string>
+    <string name="btn_subtract_desc">Subtraction</string>
+    <string name="btn_multiply_desc">Multiplication</string>
+    <string name="btn_divide_desc">Division</string>
+    <string name="btn_clear_desc">Clear all</string>
+    <string name="btn_backspace_desc">Backspace</string>
+    <string name="btn_equals_desc">Calculate result</string>
+</resources>

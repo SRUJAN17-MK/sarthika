@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <!-- Header Section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="24dp">
+
+            <!-- Question Counter -->
+            <TextView
+                android:id="@+id/tvQuestionCounter"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="16sp"
+                android:textColor="@color/text_secondary"
+                android:text="Question 1 of 10"
+                android:contentDescription="@string/question_counter_desc" />
+
+            <!-- Score -->
+            <TextView
+                android:id="@+id/tvScore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/primary"
+                android:text="Score: 0"
+                android:contentDescription="@string/score_desc" />
+        </LinearLayout>
+
+        <!-- Progress Bar -->
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="8dp"
+            android:max="100"
+            android:progress="0"
+            android:layout_marginBottom="24dp"
+            android:progressTint="@color/primary"
+            android:contentDescription="@string/progress_desc" />
+
+        <!-- Question Card -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/question_card_background"
+            android:padding="24dp"
+            android:layout_marginBottom="24dp">
+
+            <!-- Question Text -->
+            <TextView
+                android:id="@+id/tvQuestion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/text_primary"
+                android:layout_marginBottom="24dp"
+                android:lineSpacingMultiplier="1.2"
+                android:contentDescription="@string/question_desc" />
+
+            <!-- Radio Group for Options -->
+            <RadioGroup
+                android:id="@+id/radioGroupOptions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:contentDescription="@string/options_desc">
+
+                <!-- Option 1 -->
+                <RadioButton
+                    android:id="@+id/rbOption1"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:padding="12dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@drawable/radio_button_background"
+                    android:textSize="16sp"
+                    android:textColor="@color/text_primary"
+                    android:button="@null"
+                    android:drawableEnd="@android:drawable/btn_radio"
+                    android:gravity="center_vertical"
+                    android:contentDescription="@string/option_1_desc" />
+
+                <!-- Option 2 -->
+                <RadioButton
+                    android:id="@+id/rbOption2"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:padding="12dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@drawable/radio_button_background"
+                    android:textSize="16sp"
+                    android:textColor="@color/text_primary"
+                    android:button="@null"
+                    android:drawableEnd="@android:drawable/btn_radio"
+                    android:gravity="center_vertical"
+                    android:contentDescription="@string/option_2_desc" />
+
+                <!-- Option 3 -->
+                <RadioButton
+                    android:id="@+id/rbOption3"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:padding="12dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@drawable/radio_button_background"
+                    android:textSize="16sp"
+                    android:textColor="@color/text_primary"
+                    android:button="@null"
+                    android:drawableEnd="@android:drawable/btn_radio"
+                    android:gravity="center_vertical"
+                    android:contentDescription="@string/option_3_desc" />
+
+                <!-- Option 4 -->
+                <RadioButton
+                    android:id="@+id/rbOption4"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:padding="12dp"
+                    android:background="@drawable/radio_button_background"
+                    android:textSize="16sp"
+                    android:textColor="@color/text_primary"
+                    android:button="@null"
+                    android:drawableEnd="@android:drawable/btn_radio"
+                    android:gravity="center_vertical"
+                    android:contentDescription="@string/option_4_desc" />
+
+            </RadioGroup>
+        </LinearLayout>
+
+        <!-- Next Button -->
+        <Button
+            android:id="@+id/btnNext"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="@string/next_button"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:backgroundTint="@color/primary"
+            android:textColor="@android:color/white"
+            android:contentDescription="@string/next_button_desc" />
+
+    </LinearLayout>
+</ScrollView>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Unit Converter</string>
+    <string name="app_title">Unit Converter</string>
+    <string name="category_label">Category:</string>
+    <string name="from_unit_label">From:</string>
+    <string name="to_unit_label">To:</string>
+    <string name="input_value_label">Input Value:</string>
+    <string name="input_hint">Enter value</string>
+    <string name="convert_button">CONVERT</string>
+    <string name="category_content_desc">Select measurement category</string>
+    <string name="from_unit_content_desc">Select source unit</string>
+    <string name="to_unit_content_desc">Select target unit</string>
+    <string name="input_content_desc">Enter value to convert</string>
+    <string name="convert_button_content_desc">Convert the entered value</string>
+    <string name="result_content_desc">Conversion result</string>
+</resources>

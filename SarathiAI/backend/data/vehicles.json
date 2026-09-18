@@ -1,0 +1,69 @@
+{
+  "vehicles": [
+    {
+      "id": "V0001",
+      "name": "Transporter A1",
+      "type": "Truck",
+      "plate_number": "KA-01-AB-1234",
+      "capacity": 5000,
+      "status": "active",
+      "mileage": 45230,
+      "last_service": "2026-09-01",
+      "fuel_level": 72,
+      "driver": "Rajesh Kumar",
+      "route": "City Center - Tech Park"
+    },
+    {
+      "id": "V0002",
+      "name": "Carrier B2",
+      "type": "Van",
+      "plate_number": "KA-02-CD-5678",
+      "capacity": 2000,
+      "status": "active",
+      "mileage": 32100,
+      "last_service": "2026-08-15",
+      "fuel_level": 45,
+      "driver": "Priya Sharma",
+      "route": "Industrial Area - Warehouse"
+    },
+    {
+      "id": "V0003",
+      "name": "Hauler C3",
+      "type": "Truck",
+      "plate_number": "KA-03-EF-9012",
+      "capacity": 8000,
+      "status": "maintenance",
+      "mileage": 67800,
+      "last_service": "2026-08-20",
+      "fuel_level": 88,
+      "driver": "",
+      "route": ""
+    },
+    {
+      "id": "V0004",
+      "name": "Courier D4",
+      "type": "Van",
+      "plate_number": "KA-04-GH-3456",
+      "capacity": 1500,
+      "status": "active",
+      "mileage": 28900,
+      "last_service": "2026-09-05",
+      "fuel_level": 63,
+      "driver": "Amit Patel",
+      "route": "Hub - Residential Zone"
+    },
+    {
+      "id": "V0005",
+      "name": "Delivery E5",
+      "type": "Bike",
+      "plate_number": "KA-05-IJ-7890",
+      "capacity": 200,
+      "status": "idle",
+      "mileage": 15400,
+      "last_service": "2026-09-10",
+      "fuel_level": 91,
+      "driver": "Sanjay Verma",
+      "route": ""
+    }
+  ]
+}

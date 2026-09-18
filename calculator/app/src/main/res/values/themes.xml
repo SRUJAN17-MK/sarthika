@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.Calculator" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/accent</item>
+        <item name="android:windowBackground">@color/background</item>
+        <item name="android:statusBarColor">@color/primary_dark</item>
+    </style>
+
+    <!-- Number button style -->
+    <style name="NumberButton" parent="Widget.MaterialComponents.Button.UnelevatedButton">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">72dp</item>
+        <item name="android:layout_columnWeight">1</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/button_text</item>
+        <item name="backgroundTint">@color/number_button_bg</item>
+        <item name="android:layout_margin">4dp</item>
+        <item name="cornerRadius">8dp</item>
+    </style>
+
+    <!-- Operator button style -->
+    <style name="OperatorButton" parent="Widget.MaterialComponents.Button.UnelevatedButton">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">72dp</item>
+        <item name="android:layout_columnWeight">1</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/button_text</item>
+        <item name="backgroundTint">@color/operator_button_bg</item>
+        <item name="android:layout_margin">4dp</item>
+        <item name="cornerRadius">8dp</item>
+    </style>
+
+    <!-- Special button style (C, ⌫) -->
+    <style name="SpecialButton" parent="Widget.MaterialComponents.Button.UnelevatedButton">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">72dp</item>
+        <item name="android:layout_columnWeight">1</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/button_text</item>
+        <item name="backgroundTint">@color/special_button_bg</item>
+        <item name="android:layout_margin">4dp</item>
+        <item name="cornerRadius">8dp</item>
+    </style>
+
+    <!-- Equals button style -->
+    <style name="EqualsButton" parent="Widget.MaterialComponents.Button.UnelevatedButton">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">72dp</item>
+        <item name="android:layout_columnWeight">1</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/button_text_dark</item>
+        <item name="backgroundTint">@color/equals_button_bg</item>
+        <item name="android:layout_margin">4dp</item>
+        <item name="cornerRadius">8dp</item>
+    </style>
+</resources>
